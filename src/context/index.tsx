@@ -6,7 +6,6 @@ interface AuthContextType {
     isAuthenticated: boolean;
     user: string | null;
     login: (email: string, password: string) => Promise<void>;
-    profile: () => void;
     logout: () => void;
 }
 
@@ -23,9 +22,7 @@ const AuthProvider = ({ children }: AuthProviderContextProps) => {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
-
             setIsAuthenticated(true);
-
         }
     }, []);
 
@@ -35,39 +32,39 @@ const AuthProvider = ({ children }: AuthProviderContextProps) => {
                 email,
                 password
             });
-            // Supondo que a resposta contenha o token e informações do usuário
+
             const { tokens, user } = response.data;
 
-            // Armazenar o token (localStorage, cookies, etc.)
+
             localStorage.setItem('token', tokens.access);
 
             setIsAuthenticated(true);
-            setUser(user); // Ajuste de acordo com a estrutura de dados do usuário retornado
+            setUser(user);
         } catch (error) {
             console.error('Login failed:', error);
             throw new Error('Login failed');
         }
     };
 
-    const profile = async () => {
-        try {
-            const response = await api.get('/auth/login/');
+    // const profile = async () => {
+    //     try {
+    //         const response = await api.get('/auth/profile/');
 
-            const { user } = response.data;
-            setUser(user);
-            setIsAuthenticated(true);
+    //         const { user } = response.data;
+    //         setUser(user);
+    //         setIsAuthenticated(true);
 
 
 
-        }
-        catch (error) {
-            console.error('Profile failed:', error);
-            throw new Error('Profile failed');
-        }
-    }
+    //     }
+    //     catch (error) {
+    //         console.error('Profile failed:', error);
+    //         throw new Error('Profile failed');
+    //     }
+    // }
 
     const logout = () => {
-        // Remover o token
+
         localStorage.removeItem('token');
 
         setIsAuthenticated(false);
@@ -75,7 +72,7 @@ const AuthProvider = ({ children }: AuthProviderContextProps) => {
     };
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, user, login, profile, logout }}>
+        <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
             {children}
         </AuthContext.Provider>
     );

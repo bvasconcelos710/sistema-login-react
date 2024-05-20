@@ -1,4 +1,5 @@
 import axios from "axios";
+import { UserProfile } from "../model/UserProfile";
 
 export const api = axios.create({
   baseURL: "https://api.homologation.cliqdrive.com.br",
@@ -19,3 +20,5 @@ api.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
+export const getProfile = () => api.get<UserProfile>('/auth/profile/');
