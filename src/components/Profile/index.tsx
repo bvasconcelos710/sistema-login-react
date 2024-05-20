@@ -10,9 +10,9 @@ const Profile = ({ user }: ProfileProps) => {
     return (
         <>
 
-            <div className=" justify-center items-center bg-white  w-[438px] h-[480px] px-6 py-6 shadow-2xl ">
+            <div className="justify-center items-center bg-white w-[438px] h-[480px] px-6 py-6 shadow-2xl ">
 
-                <h2 className=" text-center text-gray-700">
+                <h2 className="text-center text-gray-700">
                     Profile Picture
                 </h2>
                 <div className="flex justify-center items-center mt-2">

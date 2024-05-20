@@ -1,7 +1,6 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { api } from '../api';
 
-
 interface AuthContextType {
     isAuthenticated: boolean;
     user: string | null;
@@ -45,23 +44,6 @@ const AuthProvider = ({ children }: AuthProviderContextProps) => {
             throw new Error('Login failed');
         }
     };
-
-    // const profile = async () => {
-    //     try {
-    //         const response = await api.get('/auth/profile/');
-
-    //         const { user } = response.data;
-    //         setUser(user);
-    //         setIsAuthenticated(true);
-
-
-
-    //     }
-    //     catch (error) {
-    //         console.error('Profile failed:', error);
-    //         throw new Error('Profile failed');
-    //     }
-    // }
 
     const logout = () => {
 
