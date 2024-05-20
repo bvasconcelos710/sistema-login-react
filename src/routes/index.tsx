@@ -1,15 +1,14 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LoginPage from '../pages/LoginPage';
-import HomePage from '../pages/HomePage';
+import { useAuth } from '../context';
+import PublicRoutes from './public';
+import PrivateRoutes from './private';
 
 const AppRoutes = () => {
+    const { isAuthenticated } = useAuth();
+
     return (
-        <Router>
-            <Routes>
-                <Route path='/' element={<LoginPage />}></Route>
-                <Route path='/home' element={<HomePage />}></Route>
-            </Routes>
-        </Router>
+        <>
+            {isAuthenticated ? <PrivateRoutes /> : <PublicRoutes />}
+        </>
     )
 }
 

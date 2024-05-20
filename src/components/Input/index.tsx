@@ -1,11 +1,13 @@
 
 interface InputProps {
-    label: string;
+    label?: string;
     type: string;
-    placeholder: string;
+    placeholder?: string;
+    value: string;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input = ({ label, type, placeholder }: InputProps) => {
+const Input = ({ label, type, placeholder, value, onChange }: InputProps) => {
     return (
         <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={label}>
@@ -16,6 +18,8 @@ const Input = ({ label, type, placeholder }: InputProps) => {
                 id={label}
                 type={type}
                 placeholder={placeholder}
+                value={value}
+                onChange={onChange}
             />
         </div>
     );

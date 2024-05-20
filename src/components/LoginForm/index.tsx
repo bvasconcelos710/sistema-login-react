@@ -1,11 +1,31 @@
+import { useState } from "react";
 import Button from "../Button";
 import Input from "../Input";
+import { useAuth } from "../../context";
+import { useNavigate } from 'react-router-dom'
 
 
 const LoginForm = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const { login } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogin = async () => {
+        try {
+            await login(email, password);
+            navigate('/home');
+        } catch (error) {
+            alert("Credenciais erradas");
+            console.error('Login failed:', error);
+            throw new Error('Login failed');
+
+        }
+    };
+
     return (
-        <div className="justify-center bg-white w-[438px] h-[500px] px-6 py-10 shadow-3xl rounded-2xl ">
-            <div className="logo-container flex justify-center items-center">
+        <div className="justify-center bg-white w-[438px] h-[480px] px-6 py-14 shadow-3xl rounded-2xl ">
+            <div className="flex justify-center items-center">
                 <svg width="309" height="94" viewBox="0 0 106 42" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M17.1955 36C15.4243 36 13.845 35.6015 12.4575 34.8045C11.0701 34.0074 9.97784 32.9152 9.1808 31.5277V35.5572H4V6.00012H9.93356V16.4281C10.7601 15.0407 11.8376 13.9484 13.166 13.1514C14.524 12.3543 16.1033 11.9558 17.904 11.9558C19.9114 11.9558 21.6679 12.5167 23.1734 13.6385C24.7084 14.7307 25.904 16.192 26.7601 18.0222C27.6162 19.8525 28.0442 21.8599 28.0442 24.0444C28.0442 26.2879 27.5719 28.31 26.6272 30.1108C25.6826 31.9115 24.3837 33.3432 22.7306 34.4059C21.107 35.4687 19.262 36 17.1955 36ZM15.5572 30.9521C16.8265 30.9521 17.9335 30.6421 18.8782 30.0222C19.8524 29.4023 20.6051 28.5757 21.1365 27.5425C21.6974 26.4798 21.9778 25.3285 21.9778 24.0886C21.9778 22.8193 21.7121 21.6532 21.1808 20.5905C20.6789 19.4982 19.9704 18.6274 19.0553 17.978C18.1402 17.3285 17.0922 17.0038 15.9114 17.0038C14.6125 17.0038 13.417 17.4466 12.3247 18.3322C11.262 19.1883 10.4649 20.251 9.93356 21.5204V27.0554C10.3173 28.2067 11.0701 29.1514 12.1919 29.8894C13.3136 30.5978 14.4354 30.9521 15.5572 30.9521Z" fill="#02274F" />
                     <path d="M27.524 35.5571C27.524 33.8154 27.7159 32.2656 28.0997 30.9076C28.513 29.5497 29.2215 28.3246 30.2251 27.2324C31.2288 26.1401 32.6458 25.0774 34.4761 24.0442C36.0997 23.1881 37.4576 22.4649 38.5499 21.8744C39.6421 21.284 40.4687 20.7232 41.0295 20.1918C41.62 19.6309 41.9152 18.9815 41.9152 18.2435C41.9152 17.3579 41.5609 16.6051 40.8524 15.9852C40.1439 15.3357 39.1403 15.011 37.8414 15.011C36.4244 15.011 35.1993 15.3505 34.1661 16.0294C33.1624 16.7084 32.2916 17.4907 31.5536 18.3763L27.7897 14.0368C28.3211 13.4759 29.1181 12.8708 30.1809 12.2213C31.2436 11.5719 32.513 11.011 33.989 10.5387C35.465 10.0664 37.0886 9.8302 38.8598 9.8302C41.8709 9.8302 44.203 10.5387 45.8561 11.9557C47.5388 13.3431 48.3801 15.1438 48.3801 17.3579C48.3801 18.7453 48.0554 19.9261 47.4059 20.9003C46.786 21.8449 46.0037 22.6567 45.0591 23.3357C44.1439 23.9851 43.2583 24.5608 42.4022 25.0626C40.5129 26.0073 39.0222 26.8338 37.9299 27.5423C36.8672 28.2508 36.0111 29.1364 35.3617 30.1992H48.8672V35.5571H27.524Z" fill="#02274F" />
@@ -16,9 +36,9 @@ const LoginForm = () => {
 
             </div>
 
-            <Input label="E-mail" type="email" placeholder="@gmail.com" />
-            <Input label="Senha" type="password" placeholder="**********" />
-            <Button label="Sign In" />
+            <Input label="E-mail" type="email" placeholder="@gmail.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <Input label="Senha" type="password" placeholder="**********" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <Button label="Sign In" onClick={handleLogin} />
         </div>
     );
 }
